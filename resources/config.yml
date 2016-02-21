@@ -1,0 +1,11 @@
+---
+# iMention 플러그인의 최신버전이 존재하는지 체크합니다.
+update-check: true
+
+# 언급시 변경 문자형식을 지정해줍니다.
+# {nickname} - 닉네임, {economy-money} - 이코노미 돈상태, {displayName} - 디스플레이 닉네임, {x} - 위치 x값, {y} - 위치 y값, {z} - 위치 z값
+format: "{displayName}{{x}.{y}.{z}}"
+
+# 언급당한 대상에게 메세지를 띄웁니다. ( 비울시, 띄우지 않습니다. )
+notice: "[ 서버 ] {player}님이 당신을 언급하였습니다 !"
+...

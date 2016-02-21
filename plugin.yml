@@ -1,0 +1,9 @@
+name: iMention
+main: inflater\iMention\iMention
+version: "1.0.0-beta"
+author: InflateR(egmzkdhtm@naver.com)
+api: [1.12.0, 1.13.0, 2.0.0]
+
+permissions:
+  iMention.mention:
+    default: true
