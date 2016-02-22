@@ -10,6 +10,7 @@ namespace inflater\iMention;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\event\player\PlayerCommandPreprocessEvent;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 use pocketmine\utils\Utils;
@@ -27,7 +28,7 @@ class iMention extends PluginBase implements Listener{
 
 	public function onPlayerChat(PlayerChatEvent $ev){
 		if(!$ev->getPlayer()->hasPermission('iMention.mention')) { return; }
-		if(preg_match_all('/@[a-zA-Z]+/', $ev->getMessage(), $msg)) {
+		if(preg_match_all('/@[a-zA-Z0-9_]+/', $ev->getMessage(), $msg)) {
 			for($i = 0; $i<count($msg[0]); $i++) {
 				$target = $this->getServer()->getPlayer(str_replace('@', '', $msg[0][$i]));
 				if($target instanceof Player){
@@ -40,6 +41,19 @@ class iMention extends PluginBase implements Listener{
 						$target->sendMessage(TextFormat::AQUA . str_replace('{player}', $ev->getPlayer()->getName(), $this->config['notice']));
 				}
 			}
+		}
+	}
+
+	public function onPlayerCommandPreprocess(PlayerCommandPreprocessEvent $ev){
+		if(!$ev->getPlayer()->hasPermission('iMention.command')) { return; }
+		if(preg_match_all('/@[a-zA-Z0-9_]+/', $ev->getMessage(), $msg)) {
+			for($i = 0; $i<count($msg[0]); $i++) {
+				$target = $this->getServer()->getPlayer(str_replace('@', '', $msg[0][$i]));
+				if($target instanceof Player){
+					$ev->setMessage(str_replace($msg[0][$i], $target->getName(), $ev->getMessage()));
+				}
+			}
+
 		}
 	}
 
